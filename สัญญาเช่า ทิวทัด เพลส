@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สัญญาเช่า ทิวทัด เพลส - บริษัท ปันเงิน 99 จำกัด</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --bg-color: #f1f5f9;
+            --paper-bg: #ffffff;
+            --text-color: #000000;
+            --border-color: #cbd5e1;
+        }
+        * { box-sizing: border-box; box-shadow: none !important; }
+        body { font-family: 'Sarabun', sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.8; margin: 0; padding: 25px 10px; }
+        .no-print-area { max-width: 850px; margin: 0 auto 25px auto; background: #ffffff; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0; }
+        .instruction-title { font-size: 18px; font-weight: 800; color: var(--primary-color); margin-bottom: 5px; }
+        .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group.full-width { grid-column: span 2; }
+        label { font-weight: 700; margin-bottom: 5px; font-size: 13px; color: #334155; }
+        input[type="text"], input[type="number"], input[type="file"] { padding: 10px; border: 1px solid var(--border-color); border-radius: 6px; font-family: 'Sarabun', sans-serif; font-size: 14px; }
+        
+        .signature-pad-container { background: #f8fafc; border: 2px dashed #94a3b8; border-radius: 8px; padding: 10px; text-align: center; margin-top: 5px; }
+        canvas { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; cursor: crosshair; touch-action: none; width: 100%; height: 140px; }
+        .btn-clear { background-color: #ef4444; color: white; padding: 6px 15px; border: none; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; margin-top: 8px; font-family: 'Sarabun', sans-serif; }
+        
+        .bank-info-box { background-color: #fef08a; border: 1px solid #facc15; padding: 15px; border-radius: 8px; color: #713f12; font-weight: bold; font-size: 14px; margin-bottom: 20px; }
+        .btn-container { text-align: center; margin-top: 10px; }
+        .btn-print { background-color: #059669; color: white; padding: 14px 40px; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; font-family: 'Sarabun', sans-serif; width: 100%; }
+        
+        .a4-container { max-width: 850px; margin: 0 auto; }
+        .a4-page { width: 100%; background: var(--paper-bg); padding: 50px 60px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 16px; text-align: justify; color: #000000; }
+        .title { text-align: center; font-size: 26px; font-weight: 800; margin-bottom: 25px; color: #1e3a8a; letter-spacing: 0.5px; }
+        p { margin: 14px 0; text-indent: 40px; }
+        .no-indent { text-indent: 0 !important; }
+        .right-align { text-align: right; margin-bottom: 25px; text-indent: 0; }
+        .value-text { color: #1e3a8a; font-weight: 700; border-bottom: 1px dotted #64748b; padding: 0 4px; display: inline-block; text-align: center; text-indent: 0 !important; }
+        .sig-area { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; margin-top: 40px; text-align: center; text-indent: 0 !important; }
+        .sig-box { margin-bottom: 20px; text-indent: 0 !important; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
+        .sig-box p { text-indent: 0 !important; margin: 4px 0; }
+        .embedded-sig { max-height: 60px; max-width: 180px; display: none; margin-bottom: -10px; }
+        
+        .id-card-preview-area { margin-top: 30px; border-top: 1px dashed #cbd5e1; padding-top: 20px; text-align: center; text-indent: 0 !important; }
+        .id-card-img { max-width: 100%; max-height: 220px; border: 1px solid #94a3b8; border-radius: 6px; margin-top: 10px; display: none; }
+        .slip-img { max-width: 100%; max-height: 380px; border: 1px solid #94a3b8; border-radius: 6px; margin-top: 10px; display: none; }
+        .page-break { display: none; }
+
+        @media print {
+            @page { size: A4; margin: 20mm 20mm; }
+            body { background-color: #ffffff; padding: 0; margin: 0; }
+            .no-print-area { display: none !important; }
+            .a4-page { border: none; padding: 0; margin-bottom: 0; font-size: 16px; line-height: 1.8; }
+            .value-text { color: #000000 !important; border-bottom: none !important; }
+            .id-card-img, .slip-img, .embedded-sig { display: inline-block !important; }
+            .page-break { display: block; page-break-before: always; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="no-print-area">
+        <div class="instruction-title">✍️ ระบบจัดทำสัญญาเช่า ทิวทัด เพลส ออนไลน์ (ส่วนควบคุมความปลอดภัย)</div>
+        <p style="margin: 0 0 15px 0; font-size: 13px; color: #64748b;">ให้ผู้เช่ากรอกข้อมูลผ่านโทรศัพท์มือถือออนไลน์ ระบบจะประมวลผลจัดทำเอกสารและแนบหลักฐานเข้าเล่มอัตโนมัติ</p>
+        <div class="bank-info-box">📢 บัญชีรับโอนเงินมัดจำมัดจำประกัน 2 เดือน: ธนาคารกรุงศรีอยุธยา | เลขบัญชี: 773-1-12261-8 | ชื่อบัญชี: บริษัท ปันเงิน 99 จำกัด</div>
+
+        <div class="form-grid">
+            <div class="form-group"><label>วันที่ทำสัญญา (เช่น 24 มิถุนายน 2569)</label><input type="text" id="in_contract_date" placeholder="ระบุวันที่ทำสัญญา" oninput="updateContract()"></div>
+            <div class="form-group"><label>ชื่อ-นามสกุล ผู้เช่า</label><input type="text" id="in_tenant_name" placeholder="นายสมชาย ใจดี" oninput="updateContract()"></div>
+            <div class="form-group"><label>เลขประจำตัวประชาชนผู้เช่า (13 หลัก)</label><input type="text" id="in_tenant_id" maxlength="13" placeholder="ระบุเลขบัตรประชาชน" oninput="updateContract()"></div>
+            <div class="form-group"><label>เบอร์โทรศัพท์ติดต่อผู้เช่า</label><input type="text" id="in_tenant_phone" placeholder="ระบุเบอร์โทรศัพท์" oninput="updateContract()"></div>
+            <div class="form-group full-width"><label>ที่อยู่ตามทะเบียนบ้านผู้เช่า</label><input type="text" id="in_tenant_address" placeholder="บ้านเลขที่, หมู่ที่, ถนน, ตำบล, อำเภอ, จังหวัด" oninput="updateContract()"></div>
+            <div class="form-group"><label>ห้องพักเลขที่</label><input type="text" id="in_room_no" placeholder="เช่น 305" oninput="updateContract()"></div>
+            <div class="form-group"><label>อัตราค่าเช่าห้องพักอาศัย (บาท/เดือน)</label><input type="number" id="in_rent_fee" placeholder="กรอกตัวเลข ระบบจะแยกประกันให้เอง" oninput="updateContract()"></div>
+            <div class="form-group"><label>ระยะเวลาเริ่มต้นสัญญา</label><input type="text" id="in_start_date" placeholder="เช่น 1 กรกฎาคม 2569" oninput="updateContract()"></div>
+            <div class="form-group"><label>ระยะเวลาสิ้นสุดสัญญา (เช่าขั้นต่ำ 6 เดือน)</label><input type="text" id="in_end_date" placeholder="เช่น 31 ธันวาคม 2569" oninput="updateContract()"></div>
+            <div class="form-group"><label>ชื่อธนาคารผู้เช่า (สำหรับรับโอนเงินประกันคืน)</label><input type="text" id="in_bank_name" placeholder="เช่น กสิกรไทย" oninput="updateContract()"></div>
+            <div class="form-group"><label>เลขที่บัญชี และชื่อบัญชีผู้เช่า</label><input type="text" id="in_bank_account" placeholder="เช่น 012-3-45678-9 นายปัญญา" oninput="updateContract()"></div>
+            <div class="form-group"><label>📷 อัปโหลดภาพถ่ายสำเนาบัตรประชาชนผู้เช่า</label><input type="file" id="in_id_image" accept="image/*" onchange="previewIDCard(this)"></div>
+            <div class="form-group"><label>💵 อัปโหลดภาพสลิปโอนเงินค่าประกัน (2 เดือน)</label><input type="file" id="in_slip_image" accept="image/*" onchange="previewSlip(this)"></div>
+            <div class="form-group full-width">
+                <label>✍️ เซ็นชื่อดิจิทัล (ใช้นิ้วลากเซ็นบนหน้าจอมือถือได้โดยตรง)</label>
+                <div class="signature-pad-container">
+                    <canvas id="signatureCanvas"></canvas><br>
+                    <button type="button" class="btn-clear" onclick="clearSignature()">❌ ล้างลายเซ็นเพื่อเซ็นใหม่</button>
+                </div>
+            </div>
+        </div>
+        <div class="btn-container"><button type="button" class="btn-print" onclick="window.print()">🖨️ ตรวจสอบเรียบร้อย กดสั่งพิมพ์ / บันทึกเป็น PDF หน้าเดียวจบ</button></div>
+    </div>
+    <div class="a4-container">
+        <div class="a4-page">
+            <div class="title">สัญญาเช่า ทิวทัด เพลส</div>
+            
+            <div class="right-align">
+                ทำที่ อาคารทิวทัด เพลส<br>
+                วันที่ทำสัญญา: <span id="v_contract_date" class="value-text" style="min-width: 200px;">......................................................</span>
+            </div>
+
+            <p class="no-indent">
+                สัญญาฉบับนี้ทำขึ้นระหว่าง <strong>บริษัท ปันเงิน 99 จำกัด</strong> ตั้งอยู่ ณ อาคารทิวทัด เพลส (ซึ่งต่อไปในสัญญานี้จะเรียกว่า "ผู้ให้เช่า") ฝ่ายหนึ่ง กับ 
+                <strong>คุณ <span id="v_tenant_name" class="value-text" style="min-width: 180px;">......................................................</span></strong> 
+                ถือบัตรประจำตัวประชาชนเลขที่ <strong><span id="v_tenant_id" class="value-text" style="min-width: 150px;">......................................................</span></strong> 
+                อาศัยอยู่บ้านเลขที่ <span id="v_tenant_address" class="value-text" style="min-width: 300px;">............................................................................................................................</span> 
+                เบอร์โทรศัพท์ติดต่อ <span id="v_tenant_phone" class="value-text" style="min-width: 120px;">......................................................</span> (ซึ่งต่อไปในสัญญานี้จะเรียกว่า "ผู้เช่า") อีกฝ่ายหนึ่ง โดยคู่สัญญาทั้งสองฝ่ายได้ตกลงเข้าทำสัญญาข้อผูกพันรัดกุมดั่งเนื้อความต่อไปนี้
+            </p>
+
+            <p><strong>ข้อ 1. วัตถุประสงค์และกำหนดระยะเวลาการเช่า:</strong> ผู้ให้เช่าตกลงให้เช่า และผู้เช่าตกลงเช่าห้องพักอาศัยในอาคาร ทิวทัด เพลส ห้องเลขที่ <strong><span id="v_room_no" class="value-text" style="min-width: 60px;">............</span></strong> เพื่อประโยชน์เป็นสถานที่พักอาศัยส่วนบุคคลเท่านั้น ห้ามผู้เช่านำไปใช้ประกอบกิจการค้า ทำการพาณิชย์ หรือดัดแปลงสภาพห้องเป็นสถานประกอบการอื่นใดโดยเด็ดขาด คู่สัญญาตกลงระยะเวลาการเช่าขั้นต่ำเป็นเวลา <strong>6 เดือนเต็ม</strong> นับตั้งแต่วันที่ <span id="v_start_date" class="value-text" style="min-width: 140px;">......................................................</span> ถึงวันที่ <span id="v_end_date" class="value-text" style="min-width: 140px;">......................................................</span> การยกเลิกสัญญาก่อนครบกำหนดเงื่อนไขเวลาถือเป็นการละเมิดสัญญาในสาระสำคัญร้ายแรง</p>
+
+            <p><strong>ข้อ 2. อัตราค่าเช่าห้องพักอาศัยและการชำระเงิน:</strong> ผู้เช่าตกลงจะชำระเงินค่าเช่าห้องพักอาศัยให้แก่ผู้ให้เช่าในอัตราคงที่เดือนละ <strong><span id="v_rent_fee" class="value-text" style="min-width: 100px;">........................</span></strong> บาท โดยการเรียกเก็บเงินค่าเช่าห้องพักอาศัยหลักของแต่ละเดือนนั้น คู่สัญญาตกลงผลประโยชน์ร่วมกันให้ผู้ให้เช่านำไปรวบยอดเพื่อเรียกเก็บร่วมกับค่าบริการสาธารณูปโภคและค่าใช้จ่ายอื่น ๆ ประจำรอบเดือนในรอบบิลถัดไป โดยกำหนดชำระเงินล่วงหน้าภายในวันที่ 5 ของเดือนถัดไปอย่างเคร่งครัด ผ่านช่องทางการโอนกรรมสิทธิ์เข้าบัญชีของผู้ให้เช่าโดยตรงที่ <strong>ธนาคารกรุงศรีอยุธยา เลขที่บัญชี 773-1-12261-8 ชื่อบัญชี บริษัท ปันเงิน 99 จำกัด</strong> หากพ้นกำหนดเวลาดังกล่าวถือว่าผู้เช่าผิดนัดชำระหนี้ทันที</p>
+
+            <p><strong>ข้อ 3. อัตราค่าบริการพลังงานและระบบอาคาร:</strong> ผู้เช่าตกลงชำระค่าใช้จ่ายเกี่ยวกับระบบสาธารณูปโภคและระบบส่งจ่ายพลังงานตามจำนวนยูนิตที่ใช้งานจริงประจำรอบเดือน เพื่อความสอดคล้องตามโครงสร้างต้นทุนจ่ายจริงประจำอาคารดั่งต่อไปนี้:<br>
+                3.1 <strong>ค่าน้ำประปาประจำห้องพัก:</strong> คิดตามยูนิตใช้งานจริงจากมาตรวัดน้ำในอัตราหน่วยละ <strong>25.00 บาท</strong><br>
+                3.2 <strong>ค่าบริการสาธารณูปโภคไฟฟ้าประจำห้องพัก:</strong> คิดตามยูนิตใช้งานจริงจากมาตรวัดไฟในอัตราหน่วยละ <strong>4.75 บาท</strong> (ซึ่งเป็นอัตราพลังงานตามโครงสร้างต้นทุนจ่ายจริงชำระสะสมของการไฟฟ้าส่วนภูมิภาคประจำอาคาร)<br>
+                3.3 <strong>ค่าบริการทางเทคนิค (ค่าบำรุงรักษาและจัดการระบบส่งจ่ายกำลังไฟฟ้า):</strong> คิดตามสัดส่วนการใช้งานเครื่องวัดประจำห้องในอัตราหน่วยละ <strong>3.25 บาท</strong> เพื่อบำรุงรักษาระบบสายไฟส่วนกลาง ระบบส่องสว่างทางเดิน กล้องวงจรปิด และระบบความปลอดภัยทั้งหมดภายในอาคาร ทิวทัด เพลส
+            </p>
+            <p><strong>ข้อ 4. เงินหลักประกันความเสียหายประจำห้องเช่า:</strong> ณ วันเข้าทำสัญญาฉบับนี้ คู่สัญญาตกลงร่วมกันว่าจะไม่มีการเรียกเก็บเงินค่าเช่าล่วงหน้า 1 เดือนในวันแรกเข้าพักอาศัย แต่ผู้เช่าได้จัดวางเงินหลักประกันไว้จำนวน 2 ยอดเต็ม เพื่อเป็นหลักประกันในการปฏิบัติตามข้อตกลงและระเบียบการเช่าอย่างถูกต้องดั่งรายการต่อไปนี้:<br>
+                4.1 <strong>เงินประกันความเสียหายอาคารและห้องพัก (ประกันห้อง):</strong> เป็นจำนวนเงิน <strong><span id="v_deposit_room" class="value-text" style="min-width: 100px; color: #b91c1c;">........................</span></strong> บาท (มีมูลค่าเท่ากับค่าเช่า 1 เดือน) ผู้ให้เช่าจะคืนให้เมื่อสัญญาเช่าสิ้นสุดย้ายออกและตรวจสอบสภาพห้องพักเรียบร้อย<br>
+                4.2 <strong>เงินประกันความเสียหายของเครื่องใช้อื่นๆ (ประกันเครื่องใช้และส่วนควบ):</strong> เป็นจำนวนเงิน <strong><span id="v_deposit_furniture" class="value-text" style="min-width: 100px; color: #b91c1c;">........................</span></strong> บาท (มีมูลค่าเท่ากับค่าเช่า 1 เดือน) สำหรับเป็นหลักประกันความชำรุดเสียหายของอุปกรณ์ไฟฟ้า เครื่องปรับอากาศ เฟอร์นิเจอร์ และส่วนควบทั้งหมดภายในห้องเช่า<br>
+                (รวมรายการหลักประกันความเสียหายปฏิบัติตามสัญญาแรกเข้าพักอาศัยทั้งสิ้นเป็นจำนวนเงิน 2 เดือนเต็ม)<br>
+                ทั้งนี้ เพื่อความสะดวกรวดเร็วในการคืนหลักประกันตามข้อ 4.1 และ 4.2 ผู้ให้เช่าจะทำการโอนเงินคืนเข้าบัญชีธนาคาร <strong><span id="v_bank_name" class="value-text" style="min-width: 120px;">....................................</span></strong> เลขที่บัญชี/ชื่อบัญชี <strong><span id="v_bank_account" class="value-text" style="min-width: 250px;">......................................................</span></strong> ภายในระยะเวลา 7 วันหลังสิ้นสุดสัญญานี้และผู้เช่าย้ายออกโดยไม่มีหนี้สินค้างหนี้สินค้างชำระ
+            </p>
+
+            <p><strong>ข้อ 5. การแจ้งยกเลิกสัญญาและสิทธิการย้ายออก:</strong> เมื่อพำนักอาศัยอยู่ครบตามเงื่อนไขเวลาขั้นต่ำในข้อ 1 (6 เดือนเต็ม) เรียบร้อยแล้วและผู้เช่ามีความประสงค์จะย้ายออก ผู้เช่าจะต้องส่งหนังสือคำบอกกล่าวแจ้งความประสงค์การย้ายออกเป็นลายลักษณ์อักษรให้นิติบุคคลทราบล่วงหน้าไม่น้อยกว่า <strong>30 วัน</strong> ก่อนกำหนดวันสิ้นสุดการเข้าพักอาศัยจริง หากไม่แจ้งล่วงหน้าตามเวลาดังกล่าว ผู้ให้เช่ามีสิทธิริบเงินหลักประกันเพื่อชดเชยค่าเสียโอกาสในการจัดหาผู้เช่ารายใหม่</p>
+
+            <p><strong>ข้อ 6. ระเบียบข้อห้ามเด็ดขาดเรื่องสัตว์เลี้ยง:</strong> ห้ามนำสัตว์เลี้ยงทุกชนิด (ไม่ว่าจะเป็น สุนัข, แมว, นก, หนู, สัตว์เลื้อยคลาน หรือสัตว์เลี้ยงขนาดเล็กทุกประเภท) เข้ามาเลี้ยง พักอาศัย นำมาฝากเลี้ยง หรือดูแลภายในห้องพักและบริเวณส่วนต่าง ๆ ของอาคารโดยเด็ดขาด หากตรวจพบการฝ่าฝืนข้อห้าม คู่สัญญาถือว่าผู้เช่ากระทำผิดสัญญาในสาระสำคัญอย่างร้ายแรง ผู้ให้เช่ามีสิทธิบอกเลิกสัญญาเช่า ขับไล่ให้ออกได้ทันที และมีสิทธิริบเงินประกันความเสียหายตามข้อ 4.1 และข้อ 4.2 ทั้งหมดโดยสิ้นเชิงเพื่อเป็นค่าปรับปรุงสภาพแวดล้อมอาคาร</p>
+
+            <p style="text-indent: 0px; margin-top: 45px;">คู่สัญญาได้อ่าน ทบทวน และเข้าใจข้อความโดยรายละเอียดตลอดแล้ว จึงได้ลงลายมือชื่อไว้เป็นสำคัญต่อหน้าพยาน</p>
+            
+            <div class="sig-area">
+                <div class="sig-box"><p>ลงชื่อ......................................................ผู้ให้เช่า</p><p>( บริษัท ปันเงิน 99 จำกัด )</p><p style="font-size: 13px; color: #475569;">ตัวแทนอาคารผู้มีอำนาจลงนาม</p></div>
+                <div class="sig-box">
+                    <img id="v_live_sig" class="embedded-sig" src="">
+                    <p>ลงชื่อ......................................................ผู้เช่า</p>
+                    <p>( คุณ <span id="v_sig_name" style="font-weight: bold;">......................................</span> )</p>
+                    <p style="font-size: 13px; color: #475569;">ผู้เช่าอาคารเพื่ออยู่อาศัย</p>
+                </div>
+            </div>
+
+            <div class="page-break"></div>
+            <div class="id-card-preview-area">
+                <div style="font-weight: bold; font-size: 15px; margin-bottom: 15px;">[ เอกสารแนบท้ายสัญญาหมายเลข 1: สำเนาบัตรประชาชนผู้เช่า ]</div>
+                <img id="v_id_card_img" class="id-card-img" src="">
+                
+                <div style="font-weight: bold; font-size: 15px; margin-top: 40px; margin-bottom: 15px;">[ เอกสารแนบท้ายสัญญาหมายเลข 2: หลักฐานสลิปโอนเงินประกันความเสียหายประจำอาคาร ]</div>
+                <img id="v_slip_img" class="slip-img" src="">
+            </div>
+        </div>
+    </div>
+    <script>
+        let base64ID = ""; let base64Slip = "";
+
+        function previewIDCard(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    base64ID = e.target.result;
+                    const img = document.getElementById('v_id_card_img');
+                    if (img) { img.src = base64ID; img.style.display = "inline-block"; }
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // ระบบอ่านไฟล์รูปภาพหลักฐานสลิปเงินมัดจำ
+        function previewSlip(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    base64Slip = e.target.result;
+                    const img = document.getElementById('v_slip_img');
+                    if (img) { img.src = base64Slip; img.style.display = "inline-block"; }
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // กลไกจับสัมผัสหน้าจอมือถือสำหรับลายเซ็นดิจิทัล (Touch Fix Engine)
+        const canvas = document.getElementById('signatureCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+
+        function resizeCanvas() { canvas.width = canvas.parentElement.clientWidth - 24; canvas.height = 140; ctx.lineWidth = 3; ctx.lineCap = 'round'; ctx.strokeStyle = '#1e3a8a'; }
+        
+        function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches && e.touches[0] ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches && e.touches[0] ? e.touches[0].clientY : e.clientY;
+            return { x: clientX - rect.left, y: clientY - rect.top };
+        }
+
+        function startDraw(e) { isDrawing = true; const pos = getPos(e); ctx.beginPath(); ctx.moveTo(pos.x, pos.y); if(e.touches) e.preventDefault(); }
+        function draw(e) { if (!isDrawing) return; const pos = getPos(e); ctx.lineTo(pos.x, pos.y); ctx.stroke(); if(e.touches) e.preventDefault(); }
+        function endDraw() { if (isDrawing) { isDrawing = false; const liveSig = document.getElementById('v_live_sig'); if (liveSig) { liveSig.src = canvas.toDataURL(); liveSig.style.display = "inline-block"; } } }
+
+        canvas.addEventListener('mousedown', startDraw); canvas.addEventListener('mousemove', draw); window.addEventListener('mouseup', endDraw);
+        canvas.addEventListener('touchstart', startDraw, { passive: false }); canvas.addEventListener('touchmove', draw, { passive: false }); canvas.addEventListener('touchend', endDraw);
+
+        function clearSignature() { ctx.clearRect(0, 0, canvas.width, canvas.height); const liveSig = document.getElementById('v_live_sig'); if (liveSig) liveSig.style.display = "none"; }
+
+        // ระบบ Real-Time Sync ผูกข้อมูลกรอกออนไลน์วิ่งลงเล่มสัญญาตรงจุดไข่ปลาทันที
+        function updateContract() {
+            document.getElementById('v_contract_date').innerText = document.getElementById('in_contract_date').value || "......................................................";
+            document.getElementById('v_tenant_name').innerText = document.getElementById('in_tenant_name').value || "......................................................";
+            document.getElementById('v_sig_name').innerText = document.getElementById('in_tenant_name').value || "......................................";
+            document.getElementById('v_tenant_id').innerText = document.getElementById('in_tenant_id').value || "......................................................";
+            document.getElementById('v_tenant_phone').innerText = document.getElementById('in_tenant_phone').value || "......................................................";
+            document.getElementById('v_tenant_address').innerText = document.getElementById('in_tenant_address').value || "............................................................................................................................";
+            document.getElementById('v_room_no').innerText = document.getElementById('in_room_no').value || "............";
+            document.getElementById('v_start_date').innerText = document.getElementById('in_start_date').value || "......................................................";
+            document.getElementById('v_end_date').innerText = document.getElementById('in_end_date').value || "......................................................";
+            document.getElementById('v_bank_name').innerText = document.getElementById('in_bank_name').value || "....................................";
+            document.getElementById('v_bank_account').innerText = document.getElementById('in_bank_account').value || "......................................................";
+
+            const rentVal = parseFloat(document.getElementById('in_rent_fee').value) || 0;
+            if (rentVal > 0) {
+                document.getElementById('v_rent_fee').innerText = rentVal.toLocaleString('th-TH');
+                document.getElementById('v_deposit_room').innerText = rentVal.toLocaleString('th-TH');       
+                document.getElementById('v_deposit_furniture').innerText = rentVal.toLocaleString('th-TH');  
+            } else {
+                document.getElementById('v_rent_fee').innerText = "........................";
+                document.getElementById('v_deposit_room').innerText = "........................";
+                document.getElementById('v_deposit_furniture').innerText = "........................";
+            }
+        }
+
+        window.onload = function() { resizeCanvas(); updateContract(); };
+    </script>
+</body>
+</html>
